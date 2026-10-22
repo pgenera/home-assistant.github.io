@@ -79,6 +79,8 @@ Comment:
   description: Text sent at the end of each report. It can be up to 43 characters, or 36 for a weather station or a moving location. Use printable ASCII characters other than `|` and `~`. A weather station's comment can't start with a letter and a digit, such as `h50`, since that reads as weather data.
 Position ambiguity:
   description: How many trailing digits of the position to leave out, from 0 (exact, about 18 m) to 4 (the nearest degree), to report the position less precisely.
+Suppress reports when:
+  description: An optional template. While it renders true, no reports are sent, for example `{{ distance('device_tracker.car', 'zone.home') < 1 }}` to hide the car near home. A report goes out as soon as it renders false again. If the template fails to render, reports are held back too.
 Weather:
   description: The sensors to report, one for each weather field. Only sensors with a matching device class are offered. Leave a field empty to leave it out.
 {% endconfiguration_basic %}
@@ -140,7 +142,7 @@ automation:
 
 ### Publish your phone's position while you travel
 
-Add a station with your phone's person or device tracker as the **Location** and the `/>` car symbol. It reports more often while you drive, with your course and speed, and every 30 minutes while you are stopped.
+Add a station with your phone's person or device tracker as the **Location**, the `/>` car symbol, and a **Suppress reports when** template such as `{{ is_state('person.me', 'home') }}`, so your position is only sent while you are away.
 
 ## Known limitations
 
