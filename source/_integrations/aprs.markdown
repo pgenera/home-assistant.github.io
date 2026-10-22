@@ -12,6 +12,7 @@ ha_codeowners:
 ha_domain: aprs
 ha_platforms:
   - device_tracker
+  - diagnostics
 ha_integration_type: service
 ha_quality_scale: legacy
 ---
@@ -47,6 +48,8 @@ Tracked callsigns:
 
 The only option is **Tracked callsigns**.
 
+To change the server or passcode, go to {% my integrations title="**Settings** > **Devices & services**" %}, select {% icon "mdi:dots-vertical" %} on the entry and select **Reconfigure**. Leave the passcode empty to keep the current one, or enter `-1` to switch a receiver to receive-only.
+
 ## Supported functionality
 
 ### Device trackers
@@ -62,7 +65,7 @@ Weather stations are not tracked, since they don't move.
 
 ## Data updates
 
-The integration uses a push connection: APRS-IS sends positions as stations report them, filtered to the tracked callsigns. If the connection drops, Home Assistant reconnects.
+The integration uses a push connection: APRS-IS sends positions as stations report them, filtered to the tracked callsigns. If the connection drops, Home Assistant reconnects, and the trackers are unavailable until it does.
 
 ## Examples
 
@@ -104,3 +107,5 @@ APRS-IS passcodes belong to the callsign without its SSID. Check that the passco
 This integration follows standard integration removal. No extra steps are required.
 
 {% include integrations/remove_device_service.md %}
+
+Removing a tracked station's device removes its tracker until the station is heard again.
