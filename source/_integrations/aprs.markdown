@@ -76,7 +76,7 @@ Location:
 Symbol:
   description: "The APRS symbol table character (`/`, `\\`, or an overlay digit or capital letter) and symbol code, such as `/_` for a weather station, `/-` for a house or `/>` for a car. Weather data can only be sent with the weather station symbol, `_`."
 Comment:
-  description: Text sent at the end of each report. It can be up to 43 characters, or 36 for a weather station. Use printable ASCII characters other than `|` and `~`. A weather station's comment can't start with a letter and a digit, such as `h50`, since that reads as weather data.
+  description: Text sent at the end of each report. It can be up to 43 characters, or 36 for a weather station or a moving location. Use printable ASCII characters other than `|` and `~`. A weather station's comment can't start with a letter and a digit, such as `h50`, since that reads as weather data.
 Position ambiguity:
   description: How many trailing digits of the position to leave out, from 0 (exact, about 18 m) to 4 (the nearest degree), to report the position less precisely.
 Weather:
@@ -115,7 +115,10 @@ Tracking uses a push connection: APRS-IS sends positions as stations report them
 A published station connects only to send a report:
 
 - With weather data, it reports every 10 minutes, as weather networks ask.
-- Without weather data, it reports every 30 minutes, with the location's position at that time.
+- A position-only report for a zone goes out every 30 minutes.
+- A person or device tracker reports using SmartBeaconing™: every 30 minutes when stopped, more often the faster it moves, down to every 3 minutes at 60 mph (about 100 km/h) and above, and soon after it turns or stops. Moving reports include the course and speed. Position changes within the location's GPS accuracy are ignored.
+
+SmartBeaconing™ is a trademark of HamHUD.net.
 
 ## Examples
 
@@ -137,7 +140,7 @@ automation:
 
 ### Publish your phone's position while you travel
 
-Add a station with your phone's person or device tracker as the **Location** and the `/>` car symbol. It reports where you are every 30 minutes.
+Add a station with your phone's person or device tracker as the **Location** and the `/>` car symbol. It reports more often while you drive, with your course and speed, and every 30 minutes while you are stopped.
 
 ## Known limitations
 
